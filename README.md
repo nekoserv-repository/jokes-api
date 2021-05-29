@@ -9,7 +9,7 @@ Small REST API designed to serve a random joke.
 ## Usage:
  - install dependencies : pip3 install -r requirements.txt
  - add environement variables (see, edit and run setenv.sh)
- - run : python main.py
+ - run : python jokes-api.py
 
 ## Usage with docker:
  - docker build --tag jokes-api .
