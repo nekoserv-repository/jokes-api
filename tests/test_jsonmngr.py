@@ -1,7 +1,6 @@
 import os
 from importlib import resources
 from io import StringIO
-from json import load
 from unittest import TestCase
 from unittest.mock import patch, MagicMock, ANY
 
@@ -44,8 +43,7 @@ class TestJsonMngr(TestCase):
 
     @patch('sys.stdout', new_callable=StringIO)
     def test__categorizing(self, mock_stdout):
-        with open(self.json_sample) as json_fp:
-            self.jm.json_data = load(json_fp)
+        self.jm.json_data = [self.joke_1, self.joke_2]
         self.jm._categorizing()
         self.assertEqual('> loading JSON file... done\n', mock_stdout.getvalue())
         self.assertEqual({'cat1': [self.joke_1], 'cat2': [self.joke_2]},
@@ -53,8 +51,7 @@ class TestJsonMngr(TestCase):
 
     def test_get_random_joke(self):
         self.jm.nb_jokes = 2
-        with open(self.json_sample) as json_fp:
-            self.jm.json_data = load(json_fp)
+        self.jm.json_data = [self.joke_1, self.joke_2]
         joke = self.jm.get_random_joke()
         self.assertTrue(joke == self.joke_1 or self.joke_2)
 
@@ -63,23 +60,20 @@ class TestJsonMngr(TestCase):
         self.assertIsNone(joke)
 
     def test_get_random_joke_with_type(self):
-        with open(self.json_sample) as json_fp:
-            self.jm.json_data = load(json_fp)
+        self.jm.json_data = [self.joke_1, self.joke_2]
         self.jm._categorizing()
         joke = self.jm.get_random_joke_with_type('cat1')
         self.assertTrue(joke == self.joke_1)
 
     def test_get_random_joke_with_type_invalid_cat(self):
-        with open(self.json_sample) as json_fp:
-            self.jm.json_data = load(json_fp)
+        self.jm.json_data = [self.joke_1, self.joke_2]
         self.jm._categorizing()
         joke = self.jm.get_random_joke_with_type('invalid_cat')
         self.assertIsNone(joke)
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_get_categories(self, mock_stdout):
-        with open(self.json_sample) as json_fp:
-            self.jm.json_data = load(json_fp)
+        self.jm.json_data = [self.joke_1, self.joke_2]
         self.jm._categorizing()
         categories = self.jm.get_categories()
         self.assertEqual(self.categories, categories)
