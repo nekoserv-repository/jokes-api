@@ -31,4 +31,4 @@ RUN cd && \
     pip3 install --no-cache-dir --no-warn-script-location --user -r /home/user/requirements.txt
 
 # run!
-ENTRYPOINT ["python", "-u", "/home/user/jokes-api.py"]
+ENTRYPOINT ["python", "-u", "/home/user/jokes_api.py"]
