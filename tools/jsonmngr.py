@@ -33,7 +33,8 @@ class JsonMngr:
             if e['type'] not in self.categories:
                 self.categories.append(e['type'])
                 self.json_data_categorized[e['type']] = []
-            self.json_data_categorized[e['type']].append(e)
+            if e not in self.json_data_categorized[e['type']]:
+                self.json_data_categorized[e['type']].append(e)
         print('done')
 
     # return random joke from json
